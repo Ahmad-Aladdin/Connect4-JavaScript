@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/index.css">
@@ -9,36 +10,51 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Connect Four</title>
 </head>
-<body>
-    <h1>Connect Four</h1>
-    <div class="main">
-    
-        <tr>
-            <td> User Name</td>
-            <td> <input id="user1" type="text"></td>
-        </tr>
-        <td>Game mode</td>
-        <td>
-            <select id="mood" name=" Game mode">
-                <option value="easy" > easy</option>
-                <option value="hard"> hard</option>
-            </select>
-        </td>
 
-        <td> Play With </td>
-        <td>
-            <select id="vs" name=" Play With">
-                <option value="Computer"> Computer</option>
-                <option value="Player"> Other Player</option>
-            </select>
-        </td>
+<body>
+    <div class="container">
+        <div class="main">
+            <div class="GameName">
+                <h1>Connect Four</h1>
+            </div>   
+            <div class="UserData">
+                <div class="username">
+                    <div class="usernametxt"> User Name</div>
+                    <div class="usernamedata">
+                        <input id="user1" type="text">
+                    </div>
+                </div>
+                <div class="GameMode">
+                    <h3> Game mode</h3>
+                </div>
+
+                <div class="ModeOptions">
+                    <select id="mood" name=" Game mode">
+                        <option value="easy"> easy</option>
+                        <option value="hard"> hard</option>
+                    </select>
+                </div>
+
+                
+
+                <div class="UsersOptions">
+                    <div class="PlayWith"> 
+                        <h3>Play With</h3> 
+                    </div>
+                    <select id="vs" name=" Play With">
+                        <option value="Computer"> Computer</option>
+                        <option value="Player"> Other Player</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="Buttons">
+                <div class="confirm">Confirm</div>
+                <div class="play">Start</div>
+            </div>
+        </div>
     </div>
-        <div class="confirm">Confirm</div>
-        <div class="photo"> <img src="Photo/1.png" alt="image"></div>
-        <div class="play">Start</div>
-    
-        
-    
- <script src="JS/index.js"></script> 
+    <script src="JS/index.js"></script>
 </body>
+
 </html>
