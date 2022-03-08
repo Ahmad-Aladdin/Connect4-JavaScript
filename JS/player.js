@@ -95,3 +95,65 @@ Array.prototype.forEach.call(tableData, (cell) => {
     // Set all slots to white for new game.
     cell.style.backgroundColor = 'white';
 });
+// check color for winner 
+
+function colorMatchCheck(one, two, three, four){
+    return (one === two && one === three && one === four && one !== 'white' && one !== undefined);
+}
+
+function horizontalCheck(){
+    for (let row = 0; row < tableRow.length; row++){
+        for (let col =0; col < 4; col++){
+           if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor,tableRow[row].children[col+1].style.backgroundColor, 
+                                tableRow[row].children[col+2].style.backgroundColor, tableRow[row].children[col+3].style.backgroundColor)){
+               return true;
+           }
+        }
+    }
+}
+
+function verticalCheck(){
+    for (let col = 0; col < 7; col++){
+        for (let row = 0; row < 3; row++){
+            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row+1].children[col].style.backgroundColor,
+                                tableRow[row+2].children[col].style.backgroundColor,tableRow[row+3].children[col].style.backgroundColor)){
+                return true;
+            };
+        }   
+    }
+}
+
+function diagonalCheck(){
+    for(let col = 0; col < 4; col++){
+        for (let row = 0; row < 3; row++){
+            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row+1].children[col+1].style.backgroundColor,
+                tableRow[row+2].children[col+2].style.backgroundColor,tableRow[row+3].children[col+3].style.backgroundColor)){
+                    return true;
+                }
+            }
+        }
+
+}
+
+function diagonalCheck2(){
+    for(let col = 0; col < 4; col++){
+        for (let row = 5; row > 2; row--){
+            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row-1].children[col+1].style.backgroundColor,
+                tableRow[row-2].children[col+2].style.backgroundColor,tableRow[row-3].children[col+3].style.backgroundColor)){
+                    return true;
+            }
+        }
+    }
+}
+
+function drawCheck(){
+    let fullSlot = []
+    for (i=0; i < tableData.length; i++){
+        if (tableData[i].style.backgroundColor !== 'white'){
+            fullSlot.push(tableData[i]);
+        }
+    }
+    if (fullSlot.length === tableData.length){
+        return true;
+    }
+}   
