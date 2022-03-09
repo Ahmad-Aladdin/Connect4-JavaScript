@@ -1,5 +1,6 @@
 // Selectors
 var player1 = localStorage.getItem("player1");
+var mood = localStorage.getItem("Mood")
 var player2 = "Computer"
 var player1Color = 'red';
 var player2Color = 'yellow';
@@ -11,9 +12,8 @@ const playBtn = document.querySelector('.play');
 var starting = false;
 var currentPlayer = 1;
 let winner;
+var re;
 playerTurn.textContent = `Player Name : ${player1}`
-
-
 // Log cell coordinates when clicked
 
 for (i = 0; i < tableData.length; i++) {
@@ -21,6 +21,7 @@ for (i = 0; i < tableData.length; i++) {
         console.log(`${e.target.parentElement.rowIndex},${e.target.cellIndex}`)
     });
 };
+var re;
 
 
 // Funtions
@@ -50,6 +51,7 @@ function generateRandom(min = 0, max = 6) {
     return rand;
 }
 
+
 function changeColor(e) {
     // Get clicked column index
     // let generatedcolo= generateRandom(0, 6);
@@ -63,13 +65,27 @@ function changeColor(e) {
                 if (tableRow[i].children[column].style.backgroundColor == 'white') {
                     row.push(tableRow[i].children[column]);
                     row[0].style.backgroundColor = 'red';
-                    if (horizontalCheck() || verticalCheck() || diagonalCheck() || diagonalCheck2()) {
-                        return confirming(player1);
-                    } else if (drawCheck()) {
-                        return alert('DRAW!');
-                    } else {
-                        return currentPlayer = 2;
+                
+                    if(mood=='easy'){
+                        if (checkeasy()) {
+                            return confirming(player1);
+                        } else if (drawCheck()) {
+                            return alert('DRAW!');
+                        } else {
+                            return currentPlayer = 2;
+                        }
                     }
+                    else
+                    {
+                        if (checkhard()) {
+                            return confirming(player1);
+                        } else if (drawCheck()) {
+                            return alert('DRAW!');
+                        } else {
+                            return currentPlayer = 2;
+                        }
+                    }
+
                 }
             }
             else { changeColorcomputer();}
@@ -78,7 +94,7 @@ function changeColor(e) {
     }
 
 }
-
+ 
 function changeColorcomputer() {
     let generatedcolo = generateRandom(0, 6);
     var row = [];
@@ -88,13 +104,24 @@ function changeColorcomputer() {
                 if (tableRow[i].children[generatedcolo].style.backgroundColor == 'white') {
                     row.push(tableRow[i].children[generatedcolo]);
                     row[0].style.backgroundColor = 'yellow';
-                    if (horizontalCheck() || verticalCheck() || diagonalCheck() || diagonalCheck2()) {
+                    if(mood=='easy'){
+                    if (checkeasy()) {
                         return confirming(player2);
                     } else if (drawCheck()) {
                         return alert('DRAW!');
                     } else {
                         return currentPlayer = 1;
                     }
+                }
+                else{
+                    if (checkhard()) {
+                        return confirming(player2);
+                    } else if (drawCheck()) {
+                        return alert('DRAW!');
+                    } else {
+                        return currentPlayer = 1;
+                    }
+                }
 
                 }
             }
@@ -104,59 +131,43 @@ function changeColorcomputer() {
 
 Array.prototype.forEach.call(tableData, (cell) => {
     cell.addEventListener('click', changeColor, true);
+
     cell.addEventListener('click', changeColorcomputer, true);
+   
+
+     
     // Set all slots to white for new game.
     cell.style.backgroundColor = 'white';
 });
 
-function colorMatchCheck(one, two, three, four) {
+function colorMatchCheckhard(one, two, three, four,five) {
+    return (one === two && one === three && one === four && one == five &&one !== 'white' && one !== undefined);
+}
+
+
+function colorMatchCheck(one, two, three, four){
     return (one === two && one === three && one === four && one !== 'white' && one !== undefined);
 }
-
-function horizontalCheck() {
-    for (let row = 0; row < tableRow.length; row++) {
-        for (let col = 0; col < 4; col++) {
-            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row].children[col + 1].style.backgroundColor,
-                tableRow[row].children[col + 2].style.backgroundColor, tableRow[row].children[col + 3].style.backgroundColor)) {
-                return true;
-            }
+function checkeasy(){
+    for (let row = 0; row < tableRow.length; row++){
+        for (let col =0; col < 4; col++){
+           if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor,tableRow[row].children[col+1].style.backgroundColor, 
+                                tableRow[row].children[col+2].style.backgroundColor, tableRow[row].children[col+3].style.backgroundColor)){
+               return true;
+           }
         }
     }
-}
-
-function verticalCheck() {
-    for (let col = 0; col < 7; col++) {
-        for (let row = 0; row < 3; row++) {
-            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col].style.backgroundColor,
-                tableRow[row + 2].children[col].style.backgroundColor, tableRow[row + 3].children[col].style.backgroundColor)) {
+    for (let col = 0; col < 7; col++){
+        for (let row = 0; row < 3; row++){
+            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row+1].children[col].style.backgroundColor,
+                                tableRow[row+2].children[col].style.backgroundColor,tableRow[row+3].children[col].style.backgroundColor)){
                 return true;
             };
-        }
-    }
-}
-
-function diagonalCheck() {
-    for (let col = 0; col < 4; col++) {
-        for (let row = 0; row < 3; row++) {
-            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col + 1].style.backgroundColor,
-                tableRow[row + 2].children[col + 2].style.backgroundColor, tableRow[row + 3].children[col + 3].style.backgroundColor)) {
-                return true;
-            }
-        }
+        }   
     }
 
 }
-
-function diagonalCheck2() {
-    for (let col = 0; col < 4; col++) {
-        for (let row = 5; row > 2; row--) {
-            if (colorMatchCheck(tableRow[row].children[col].style.backgroundColor, tableRow[row - 1].children[col + 1].style.backgroundColor,
-                tableRow[row - 2].children[col + 2].style.backgroundColor, tableRow[row - 3].children[col + 3].style.backgroundColor)) {
-                return true;
-            }
-        }
-    }
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function drawCheck() {
     let fullSlot = []
@@ -169,3 +180,49 @@ function drawCheck() {
         return true;
     }
 }   
+
+
+
+function checkhard(){
+
+    for (let row = 0; row < tableRow.length; row++) {
+        for (let col = 0; col < 3; col++) {
+            if (colorMatchCheckhard(tableRow[row].children[col].style.backgroundColor, tableRow[row].children[col + 1].style.backgroundColor,
+                tableRow[row].children[col + 2].style.backgroundColor, tableRow[row].children[col + 3].style.backgroundColor, tableRow[row].children[col + 4].style.backgroundColor)) {
+                return true;
+            }
+        }
+    }
+
+    for (let col = 0; col < 7; col++) {
+        for (let row = 0; row < 2; row++) {
+            if (colorMatchCheckhard(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col].style.backgroundColor,
+                tableRow[row + 2].children[col].style.backgroundColor, tableRow[row + 3].children[col].style.backgroundColor, tableRow[row + 4].children[col].style.backgroundColor)) {
+                return true;
+            };
+        }
+    }
+
+    for (let col = 0; col < 3; col++) {
+        for (let row = 0; row < 2; row++) {
+            if (colorMatchCheckhard(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col + 1].style.backgroundColor,
+                tableRow[row + 2].children[col + 2].style.backgroundColor, tableRow[row + 3].children[col + 3].style.backgroundColor , tableRow[row + 4].children[col + 4].style.backgroundColor)) {
+                return true;
+            }
+        }
+    }
+
+    for (let col = 0; col < 3; col++) {
+        for (let row = 5; row > 3; row--) {
+            if (colorMatchCheckhard(tableRow[row].children[col].style.backgroundColor, tableRow[row - 1].children[col + 1].style.backgroundColor,
+                tableRow[row - 2].children[col + 2].style.backgroundColor, tableRow[row - 3].children[col + 3].style.backgroundColor,tableRow[row - 4].children[col + 4].style.backgroundColor)) {
+                return true;
+            }
+        }
+    }
+
+  
+}
+
+
+
