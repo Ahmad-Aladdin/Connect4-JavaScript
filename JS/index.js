@@ -4,7 +4,8 @@ var mood = document.getElementById('mood').value;
 var Vs = document.getElementById('vs').value;
 var player1 = document.getElementById('user1').value
 
-confirmBtn.addEventListener('click', (Getdata) => {
+
+playBtn.addEventListener('click', (move) =>{
     mood = document.getElementById('mood').value;
     Vs = document.getElementById('vs').value;
     player1 = document.getElementById('user1').value
@@ -17,10 +18,6 @@ confirmBtn.addEventListener('click', (Getdata) => {
     window.localStorage.setItem("Vs", Vs)
     window.localStorage.setItem("player1", player1)
     window.localStorage.setItem("player2", player2)
-});
-
-
-playBtn.addEventListener('click', (move) =>{
     if(player1){
         if(Vs==="Player"){
             window.location.replace("player.html")
