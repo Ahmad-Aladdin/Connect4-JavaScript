@@ -30,7 +30,7 @@ body
 
 .container .main .UserData{
     margin-top: 50px ;
-    
+    margin-left: 11%;
     
 }
 
@@ -58,37 +58,45 @@ body
     
 }
 
-.container .main .GameMode h3{
+.container .main .Options h3{
     color: #dbccd8;
     font-size: 1.5em;
     margin-top: 20px;
+    margin-bottom: 15px;
 }
 
-.container .main .ModeOptions select{
-    width: 200px;
-    height: 40px;
-    font-size: 1.25em;
-}
+/* .container .main .UsersOptions {
+    padding-bottom: 20px;
+}  */
 
-.container .main .PlayWith h3{
+/* .container .main .PlayWith h3{
     color: #dbccd8;
     font-size: 1.5em;
     margin-top: 30px;
-}
+} */
 
-.container .main .UsersOptions{
+/* .container .main .UsersOptions{
     position: absolute;
     top: 23em;
     left: 46%;
-}
+} */
 
-.container .main .UsersOptions select{
+.container .main  select{
     width: 200px;
     height: 40px;
     font-size: 1.25em;
+}
+
+.container .main .UserData .Options{
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
     
 }
 
+.container .main .UserData .Options .ModeOptions{
+    margin-right: 14%;
+}
 
 .container .main .Buttons{
     margin-top: 20px;
@@ -96,14 +104,9 @@ body
     flex-wrap: wrap;
     justify-content: center;
     display: block;
-    margin-left: 290px;
+    margin-left: 50%;
     text-align: center;
 }
-
-
-
-
-
 
 
 .play{
@@ -138,37 +141,3 @@ body
         
 }
 
-.confirm{
-    position: absolute;
-    top:23rem;
-    left: 45%; 
-    font-family: 'Luckiest Guy';
-    transform: translate(-50%);
-    width: 120px;
-    height: 30px;
-    text-align: center;
-    /* padding: 0.3rem; */
-    /* border: 1px solid black; */
-    background: #ffffff;
-    cursor: crosshair;
-    /* box-shadow: 6px 5px #888888; */
-    transition: .5s;
-    margin-top: 150px;
-    margin-left: -33px;
-    padding-top: 10px;
-    font-size: 20px;
-
-    
-}
-
-.confirm:hover{
-    transition: 0.8s;
-/* box-shadow: 0px 0px #888888; */
-    background-color: rgb(141, 107, 65);
-    width: 140px;
-    height: 37px;
-    color: white;
-    text-align: center;
-    font-size: 25px;
-    border: 1.5px sold yellow;
-}
