@@ -36,7 +36,7 @@ a:hover{
 body {
      background-image: url("../Photo/dark-and-black-hd-wood-frame-PPT.jpeg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
 }
 
 .player{     display:none; }
@@ -67,7 +67,7 @@ body {
 
 .play{
     position: absolute;
-    top:32rem;
+    top:30rem;
     left: 50%;
     transform: translate(-50%);
     width: 100px;
