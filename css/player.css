@@ -10,10 +10,12 @@
 
 h1{
     font-size: 3rem;
+    color: wheat;
 }
 
 h3{
     font-size: 2rem;
+    color: wheat;
 }
 
 a{
@@ -32,8 +34,12 @@ a:hover{
 
 
 body {
-    background-color: #dcdcdc;
+     background-image: url("../Photo/dark-and-black-hd-wood-frame-PPT.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
+.player{     display:none; }
 
 .container{
     position: absolute;
@@ -42,10 +48,10 @@ body {
     width: 600px;
     height: 520px;
     top: 9rem;
-    background: rgb(87, 168, 255);
+    background: rgb(97, 94, 97);
     border: 2px solid black;
     padding: .5rem;
-    box-shadow: 5px 10px #888888;
+    /* box-shadow: 5px 10px #888888; */
 
 }
 
@@ -69,17 +75,24 @@ body {
     text-align: center;
     padding: 0.3rem;
     border: 1px solid black;
-    background: #ffffff;
+    background: rgb(97, 94, 97);
     cursor: pointer;
-    box-shadow: 6px 5px #888888;
+    /* box-shadow: 6px 5px #888888; */
     transition: .5s;
+    color: azure;
+    margin-top: 40px;
 }
 
 .play:hover{
-transition: 0.8s;
-box-shadow: 0px 0px #888888;
+    transition: 0.8s;
+    background-color: rgb(141, 107, 65);
+    width: 120px;
+    height: 40px;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+        
 }
-
 @media screen and (max-width: 600px){
     .container{
         position: absolute;
