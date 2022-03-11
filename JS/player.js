@@ -1,20 +1,31 @@
 var mood = localStorage.getItem("Mood")/////easy   or hard ///////
 var player1 = localStorage.getItem("player1");
-var player2 = localStorage.getItem("player2");
+var play = localStorage.getItem("Vs")
+if (play === 'Player'){
+var player2 = localStorage.getItem("player2");}
+if (play === 'Computer'){
+var player2 = "Computer";}
 var player1Color = 'red';
 var player2Color = 'yellow';
-
-// Selectors
-
 var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
+if (play === 'Computer'){
+var playervscomputer = document.querySelector('.player-turn');
+var playerTurn = document.querySelector('.player');
+playervscomputer.textContent = `Player Name : ${player1}`
+}
+if (play === 'Player'){
 var playerTurn = document.querySelector('.player-turn');
+}
 const slots = document.querySelectorAll('.slot');
 const playBtn = document.querySelector('.play');
 var starting = false;
-var currentPlayer = 1;
+let currentPlayer = 1;
 let winner;
+
 playerTurn.textContent = `${player1}'s turn!`
+playerTurn.style.color = 'red' 
+
 // Log cell coordinates when clicked
 
 for (i = 0; i < tableData.length; i++) {
@@ -24,8 +35,9 @@ for (i = 0; i < tableData.length; i++) {
 };
 
 
-// Funtions
 
+// Funtions
+   
 function confirming(player) {
     var confirmassg = confirm(`${player} WINS!! do you want play again .`);
 
@@ -35,7 +47,28 @@ function confirming(player) {
             slot.style.backgroundColor = 'white';
         });
         starting = false;
+        playerTurn.style.color = 'red';
+        currentPlayer = 1 ;
+        return (currentPlayer === 1 ? playerTurn.textContent = `${player1}'s turn` : playerTurn.textContent = `${player2}'s turn`);
+    }
+    else {
+        window.location.replace("index.html")
+        localStorage.clear();
+    }
+}
+
+
+function Draw() {
+    var massg = confirm(`Game is over play again`);
+
+    if (massg === true) {
+
+        slots.forEach(slot => {
+            slot.style.backgroundColor = 'white';
+        });
+        starting = false;
         playerTurn.style.color = 'black';
+        currentPlayer = 1 ;
         return (currentPlayer === 1 ? playerTurn.textContent = `${player1}'s turn` : playerTurn.textContent = `${player2}'s turn`);
     }
     else {
@@ -45,8 +78,24 @@ function confirming(player) {
 }
 playBtn.addEventListener('click', (confim) => starting = true);
 
+function playing(play,e){
+
+    if (play === 'Player'){
+        changeColor;
+    }
+
+    else {
+        if(currentPlayer === 1){
+            changeColor;
+        }if(currentPlayer === 2){
+            changeColorcomputer;
+        }
+   }
+
+}
+//////////player//////////////////////
+
 function changeColor(e) {
-  playBtn.addEventListener('click', (confim) => starting = true);
     // Get clicked column index
     let column = e.target.cellIndex;
     var row = [];
@@ -63,10 +112,12 @@ function changeColor(e) {
                             return confirming(player1);
                         } else if (drawCheck()) {
                             playerTurn.textContent = 'DRAW!';
-                            return alert('DRAW!');
+                            return Draw();
                         } else {
+                            playerTurn.style.color = 'yellow' 
                             playerTurn.textContent = `${player2}'s turn`
-                            return currentPlayer = 2;
+                            currentPlayer = 2;
+                            return playing(play)
                         }
                     }
                     if (mood == 'hard') {
@@ -76,10 +127,12 @@ function changeColor(e) {
                             return confirming(player1);
                         } else if (drawCheck()) {
                             playerTurn.textContent = 'DRAW!';
-                            return alert('DRAW!');
+                            return Draw();
                         } else {
+                            playerTurn.style.color = 'yellow' 
                             playerTurn.textContent = `${player2}'s turn`
-                            return currentPlayer = 2;
+                            currentPlayer = 2;
+                            return playing(play)
                         }
                     }
 
@@ -93,10 +146,12 @@ function changeColor(e) {
                             return confirming(player2);
                         } else if (drawCheck()) {
                             playerTurn.textContent = 'DRAW!';
-                            return alert('DRAW!');
+                            return Draw();
                         } else {
+                            playerTurn.style.color = 'red' 
                             playerTurn.textContent = `${player1}'s turn`
-                            return currentPlayer = 1;
+                            currentPlayer = 1;
+                            return playing(play)
                         }
                     }
                     if (mood == 'hard') {
@@ -106,10 +161,12 @@ function changeColor(e) {
                             return confirming(player2);
                         } else if (drawCheck()) {
                             playerTurn.textContent = 'DRAW!';
-                            return alert('DRAW!');
+                            return Draw();
                         } else {
+                            playerTurn.style.color = 'red' 
                             playerTurn.textContent = `${player1}'s turn`
-                            return currentPlayer = 1;
+                            currentPlayer = 1;
+                            return playing(play)
                         }
                     }
                 }
@@ -117,13 +174,63 @@ function changeColor(e) {
         }
 
     }}
+/////////////////////////////computer/////////////////////
+function generateRandom(min = 0, max = 6) {
+    var difference = max - min;
+    var rand = Math.random();
+    rand = Math.floor(rand * difference);
+    rand = rand + min;
+    return rand;
+}
 
-    /////////////////add color to table////////////////////
-    Array.prototype.forEach.call(tableData, (cell) => {
-        cell.addEventListener('click', changeColor);
-        // Set all slots to white for new game.
-        cell.style.backgroundColor = 'white';
-    });
+function changeColorcomputer() {
+    console.log("compfunc")
+    let generatedcolo = generateRandom(0, 6);
+    var row = [];
+    if (starting === true) {
+        for (i = 5; i > -1; i--) {
+            if (currentPlayer === 2) {
+                if (tableRow[i].children[generatedcolo].style.backgroundColor == 'white') {
+                    row.push(tableRow[i].children[generatedcolo]);
+                    row[0].style.backgroundColor = 'yellow';
+                    if(mood=='easy'){
+                    if (checkeasy()) {
+                        return confirming(player2);
+                    } else if (drawCheck()) {
+                        return Draw();
+                    } else {
+                        currentPlayer = 1;
+                        return playing(play)
+                    }
+                }
+                else{
+                    if (checkhard()) {
+                        return confirming(player2);
+                    } else if (drawCheck()) {
+                        return Draw();
+                    } else {
+                        currentPlayer = 1;
+                        return playing(play)
+                    }
+                }
+
+                }
+            }
+        }
+    }
+}
+
+/////////////////////add color to table////////////////////
+   
+Array.prototype.forEach.call(tableData, (cell) => {
+    
+    cell.addEventListener('click', changeColor,true);
+    if (play ==='Computer'){
+    cell.addEventListener('click', changeColorcomputer, true);}
+    
+    // Set all slots to white for new game.
+    cell.style.backgroundColor = 'white';
+});
 /////////////////easy check ///////////////////////////////////
 
 
@@ -186,7 +293,7 @@ function checkhard(){
             }
         }
     }
-///////////////diagonal check 1/////////////
+///////////////diagonal check 2/////////////
     for (let col = 0; col < 3; col++) {
         for (let row = 5; row > 3; row--) {
             if (colorMatchCheckhard(tableRow[row].children[col].style.backgroundColor, tableRow[row - 1].children[col + 1].style.backgroundColor,
